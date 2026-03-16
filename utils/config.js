@@ -6,7 +6,7 @@ module.exports = {
     apiKey: 'sk-972f5d16c815424a8b8aae816448ef43',
     // 模型名称
     model: 'qwen-plus',
-    // API端点
+    // API端点 - 修正为正确的端点
     endpoint: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation'
   },
   

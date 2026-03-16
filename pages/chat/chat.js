@@ -67,18 +67,9 @@ Page({
   },
 
   async callLLM(userInput) {
-    const messages = [
-      {
-        role: 'system',
-        content: config.adlerPrompt
-      },
-      {
-        role: 'user',
-        content: userInput
-      }
-    ];
+    const prompt = config.adlerPrompt + userInput;
 
-    // 调用DashScope API
+    // 调用DashScope API - 使用正确的请求格式
     const response = await wx.request({
       url: config.llm.endpoint,
       method: 'POST',
@@ -88,14 +79,19 @@ Page({
       },
       data: {
         model: config.llm.model,
-        messages: messages,
-        result_format: 'message'
+        input: {
+          prompt: prompt
+        },
+        parameters: {
+          result_format: 'text'
+        }
       }
     });
 
     if (response.statusCode === 200 && response.data.output) {
       return response.data.output.text;
     } else {
+      console.error('API response:', response);
       throw new Error('API request failed');
     }
   },
