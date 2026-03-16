@@ -90,33 +90,37 @@ Page({
       console.log('请求URL:', 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation');
       
       // 调用DashScope API
-      const response = await wx.request({
-        url: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',
-        method: 'POST',
-        header: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${config.llm.apiKey}`
-        },
-        data: {
-          model: config.llm.model,
-          input: {
-            prompt: prompt
+      const response = await new Promise((resolve, reject) => {
+        wx.request({
+          url: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',
+          method: 'POST',
+          header: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${config.llm.apiKey}`
           },
-          parameters: {
-            max_new_tokens: 512,
-            temperature: 0.7
+          data: {
+            model: config.llm.model,
+            input: {
+              prompt: prompt
+            },
+            parameters: {
+              max_new_tokens: 512,
+              temperature: 0.7
+            }
+          },
+          timeout: 30000,
+          success: function(res) {
+            console.log('请求成功:', res);
+            resolve(res);
+          },
+          fail: function(err) {
+            console.log('请求失败:', err);
+            reject(err);
+          },
+          complete: function(res) {
+            console.log('请求完成:', res);
           }
-        },
-        timeout: 30000,
-        success: function(res) {
-          console.log('请求成功:', res);
-        },
-        fail: function(err) {
-          console.log('请求失败:', err);
-        },
-        complete: function(res) {
-          console.log('请求完成:', res);
-        }
+        });
       });
 
       console.log('API响应状态:', response.statusCode);
@@ -133,7 +137,7 @@ Page({
     } catch (error) {
       console.error('API请求错误:', error);
       // 更新消息为错误信息
-      this.updateStreamingMessage(messageId, '抱歉，我暂时无法回答你的问题。错误信息：' + error.message);
+      this.updateStreamingMessage(messageId, '抱歉，我暂时无法回答你的问题。错误信息：' + (error.errMsg || error.message));
     }
   },
 
