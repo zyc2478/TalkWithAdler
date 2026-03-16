@@ -87,6 +87,7 @@ Page({
     try {
       console.log('开始调用API...');
       console.log('Prompt长度:', prompt.length);
+      console.log('请求URL:', 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation');
       
       // 调用DashScope API
       const response = await wx.request({
@@ -106,7 +107,16 @@ Page({
             temperature: 0.7
           }
         },
-        timeout: 30000 // 30秒超时
+        timeout: 30000,
+        success: function(res) {
+          console.log('请求成功:', res);
+        },
+        fail: function(err) {
+          console.log('请求失败:', err);
+        },
+        complete: function(res) {
+          console.log('请求完成:', res);
+        }
       });
 
       console.log('API响应状态:', response.statusCode);
