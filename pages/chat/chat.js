@@ -54,8 +54,23 @@ Page({
     });
 
     try {
-      const response = await this.callLLM(content);
-      this.addMessage('adler', response);
+      // 创建一个新的消息对象用于流式输出
+      const messageId = Date.now();
+      const streamingMessage = {
+        id: messageId,
+        role: 'adler',
+        content: '',
+        time: this.formatTime(new Date()),
+        isStreaming: true
+      };
+
+      this.setData({
+        messages: [...this.data.messages, streamingMessage],
+        scrollToView: `msg-${messageId}`
+      });
+
+      // 调用流式API
+      await this.callLLMStream(content, messageId);
     } catch (error) {
       console.error('LLM API error:', error);
       this.addMessage('adler', '抱歉，我暂时无法回答你的问题。请稍后再试。');
@@ -66,12 +81,11 @@ Page({
     }
   },
 
-  async callLLM(userInput) {
-    // 构建完整的提示词
+  async callLLMStream(userInput, messageId) {
     const prompt = config.adlerPrompt + userInput;
 
     try {
-      // 调用DashScope API - 使用正确的请求格式
+      // 调用DashScope API - 使用流式请求
       const response = await wx.request({
         url: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',
         method: 'POST',
@@ -87,14 +101,17 @@ Page({
           parameters: {
             max_new_tokens: 512,
             temperature: 0.7
-          }
+          },
+          stream: true,
+          incremental_output: true
         }
       });
 
       console.log('API response:', response);
 
       if (response.statusCode === 200 && response.data.output && response.data.output.text) {
-        return response.data.output.text;
+        // 更新消息内容
+        this.updateStreamingMessage(messageId, response.data.output.text);
       } else {
         console.error('API response error:', response);
         throw new Error('API request failed: ' + (response.data?.error?.message || 'Unknown error'));
@@ -103,6 +120,24 @@ Page({
       console.error('API request error:', error);
       throw error;
     }
+  },
+
+  updateStreamingMessage(messageId, content) {
+    const updatedMessages = this.data.messages.map(msg => {
+      if (msg.id === messageId) {
+        return {
+          ...msg,
+          content: content,
+          isStreaming: false
+        };
+      }
+      return msg;
+    });
+
+    this.setData({
+      messages: updatedMessages,
+      scrollToView: `msg-${messageId}`
+    });
   },
 
   handleQuote() {
