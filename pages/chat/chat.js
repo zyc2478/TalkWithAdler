@@ -67,32 +67,41 @@ Page({
   },
 
   async callLLM(userInput) {
+    // 构建完整的提示词
     const prompt = config.adlerPrompt + userInput;
 
-    // 调用DashScope API - 使用正确的请求格式
-    const response = await wx.request({
-      url: config.llm.endpoint,
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${config.llm.apiKey}`
-      },
-      data: {
-        model: config.llm.model,
-        input: {
-          prompt: prompt
+    try {
+      // 调用DashScope API - 使用正确的请求格式
+      const response = await wx.request({
+        url: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${config.llm.apiKey}`
         },
-        parameters: {
-          result_format: 'text'
+        data: {
+          model: config.llm.model,
+          input: {
+            prompt: prompt
+          },
+          parameters: {
+            max_new_tokens: 512,
+            temperature: 0.7
+          }
         }
-      }
-    });
+      });
 
-    if (response.statusCode === 200 && response.data.output) {
-      return response.data.output.text;
-    } else {
-      console.error('API response:', response);
-      throw new Error('API request failed');
+      console.log('API response:', response);
+
+      if (response.statusCode === 200 && response.data.output && response.data.output.text) {
+        return response.data.output.text;
+      } else {
+        console.error('API response error:', response);
+        throw new Error('API request failed: ' + (response.data?.error?.message || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('API request error:', error);
+      throw error;
     }
   },
 
