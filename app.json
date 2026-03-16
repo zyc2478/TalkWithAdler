@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "pages/chat/chat"
+  ],
+  "window": {
+    "navigationBarTitleText": "与阿德勒对话",
+    "navigationBarBackgroundColor": "#1a1a2e",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#16213e",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

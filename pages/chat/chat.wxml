@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="chat-container" scroll-y="true" scroll-into-view="{{scrollToView}}">
+    <view class="message-wrapper" wx:for="{{messages}}" wx:key="id" id="msg-{{item.id}}">
+      <view class="message {{item.role === 'user' ? 'message-user' : 'message-adler'}}">
+        <view class="avatar">
+          <view wx:if="{{item.role === 'adler'}}" class="avatar-adler">阿</view>
+          <view wx:else class="avatar-user">我</view>
+        </view>
+        <view class="message-content">
+          <text class="message-text">{{item.content}}</text>
+          <text class="message-time">{{item.time}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <view wx:if="{{isTyping}}" class="typing-indicator">
+      <view class="typing-dot"></view>
+      <view class="typing-dot"></view>
+      <view class="typing-dot"></view>
+    </view>
+  </view>
+
+  <view class="input-container">
+    <view class="input-wrapper">
+      <input 
+        class="chat-input" 
+        value="{{inputValue}}" 
+        bindinput="handleInput" 
+        placeholder="与阿德勒对话..." 
+        confirm-type="send"
+        bindconfirm="handleSend"
+        maxlength="500"
+      />
+      <button class="send-btn" bindtap="handleSend" disabled="{{!inputValue}}">发送</button>
+    </view>
+    <view class="action-buttons">
+      <button class="action-btn quote-btn" bindtap="handleQuote">💭 随机语录</button>
+      <button class="action-btn clear-btn" bindtap="handleClear">🗑️ 清空</button>
+    </view>
+  </view>
+</view>
