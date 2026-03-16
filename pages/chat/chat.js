@@ -85,7 +85,7 @@ Page({
     const prompt = config.adlerPrompt + userInput;
 
     try {
-      // 调用DashScope API - 使用流式请求
+      // 调用DashScope API - 使用正确的格式
       const response = await wx.request({
         url: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',
         method: 'POST',
@@ -101,9 +101,7 @@ Page({
           parameters: {
             max_new_tokens: 512,
             temperature: 0.7
-          },
-          stream: true,
-          incremental_output: true
+          }
         }
       });
 
