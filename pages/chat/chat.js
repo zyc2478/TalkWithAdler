@@ -85,7 +85,10 @@ Page({
     const prompt = config.adlerPrompt + userInput;
 
     try {
-      // 调用DashScope API - 使用正确的格式
+      console.log('开始调用API...');
+      console.log('Prompt长度:', prompt.length);
+      
+      // 调用DashScope API
       const response = await wx.request({
         url: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',
         method: 'POST',
@@ -102,21 +105,25 @@ Page({
             max_new_tokens: 512,
             temperature: 0.7
           }
-        }
+        },
+        timeout: 30000 // 30秒超时
       });
 
-      console.log('API response:', response);
+      console.log('API响应状态:', response.statusCode);
+      console.log('API响应数据:', response.data);
 
       if (response.statusCode === 200 && response.data.output && response.data.output.text) {
+        console.log('API调用成功，响应内容:', response.data.output.text);
         // 更新消息内容
         this.updateStreamingMessage(messageId, response.data.output.text);
       } else {
-        console.error('API response error:', response);
+        console.error('API调用失败:', response.data);
         throw new Error('API request failed: ' + (response.data?.error?.message || 'Unknown error'));
       }
     } catch (error) {
-      console.error('API request error:', error);
-      throw error;
+      console.error('API请求错误:', error);
+      // 更新消息为错误信息
+      this.updateStreamingMessage(messageId, '抱歉，我暂时无法回答你的问题。错误信息：' + error.message);
     }
   },
 
