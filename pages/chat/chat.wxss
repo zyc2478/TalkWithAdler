@@ -7,16 +7,20 @@
   background-color: #1a1a2e;
   color: white;
   border-bottom: 1rpx solid #333;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.top-bar-left .title {
+.title {
   font-size: 36rpx;
   font-weight: bold;
+  color: white;
 }
 
 .top-bar-right {
   display: flex;
   gap: 20rpx;
+  align-items: center;
 }
 
 .icon-btn {
