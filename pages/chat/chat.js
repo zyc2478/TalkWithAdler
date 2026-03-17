@@ -1,4 +1,5 @@
 const config = require('../../utils/config.js');
+const adlerPhilosophy = require('../../utils/adler.js');
 
 Page({
   data: {
@@ -136,8 +137,10 @@ Page({
       }
     } catch (error) {
       console.error('API请求错误:', error);
-      // 更新消息为错误信息
-      this.updateStreamingMessage(messageId, '抱歉，我暂时无法回答你的问题。错误信息：' + (error.errMsg || error.message));
+      // 使用本地规则匹配作为备用方案
+      console.log('使用本地规则匹配作为备用方案...');
+      const localResponse = adlerPhilosophy.getResponse(userInput);
+      this.updateStreamingMessage(messageId, localResponse);
     }
   },
 
