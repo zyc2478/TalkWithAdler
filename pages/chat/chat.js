@@ -14,6 +14,8 @@ Page({
   },
 
   onLoad() {
+    // 清空旧的历史记录，避免显示错误数据
+    wx.setStorageSync('chatHistory', []);
     this.initConversation();
     this.loadHistory();
     this.loadFavorites();
