@@ -6,16 +6,40 @@ Page({
     messages: [],
     inputValue: '',
     scrollToView: '',
-    isTyping: false
+    isTyping: false,
+    showHistory: false,
+    showFavorites: false,
+    historyMessages: [],
+    favoriteMessages: []
   },
 
   onLoad() {
     this.initConversation();
+    this.loadHistory();
+    this.loadFavorites();
   },
 
   initConversation() {
     const greeting = '你好，我是阿尔弗雷德·阿德勒。很高兴能与你对话。正如我所说："决定我们自身的不是过去的经历，而是我们赋予经历的意义。"';
     this.addMessage('adler', greeting);
+  },
+
+  loadHistory() {
+    const history = wx.getStorageSync('chatHistory') || [];
+    this.setData({
+      historyMessages: history
+    });
+  },
+
+  loadFavorites() {
+    const favorites = wx.getStorageSync('chatFavorites') || [];
+    this.setData({
+      favoriteMessages: favorites
+    });
+  },
+
+  saveHistory() {
+    wx.setStorageSync('chatHistory', this.data.messages);
   },
 
   addMessage(role, content) {
@@ -30,6 +54,9 @@ Page({
       messages: [...this.data.messages, message],
       scrollToView: `msg-${message.id}`
     });
+    
+    // 保存历史记录
+    this.saveHistory();
   },
 
   formatTime(date) {
@@ -160,6 +187,9 @@ Page({
       messages: updatedMessages,
       scrollToView: `msg-${messageId}`
     });
+    
+    // 保存历史记录
+    this.saveHistory();
   },
 
   handleQuote() {
@@ -185,9 +215,54 @@ Page({
           this.setData({
             messages: []
           });
+          this.saveHistory();
           this.initConversation();
         }
       }
+    });
+  },
+
+  toggleHistory() {
+    this.setData({
+      showHistory: !this.data.showHistory,
+      showFavorites: false
+    });
+  },
+
+  toggleFavorites() {
+    this.setData({
+      showFavorites: !this.data.showFavorites,
+      showHistory: false
+    });
+  },
+
+  addToFavorites(messageId) {
+    const message = this.data.messages.find(msg => msg.id === messageId);
+    if (message) {
+      const favorites = this.data.favoriteMessages;
+      if (!favorites.some(fav => fav.id === messageId)) {
+        favorites.push(message);
+        this.setData({
+          favoriteMessages: favorites
+        });
+        wx.setStorageSync('chatFavorites', favorites);
+        wx.showToast({
+          title: '收藏成功',
+          icon: 'success'
+        });
+      }
+    }
+  },
+
+  removeFromFavorites(messageId) {
+    const favorites = this.data.favoriteMessages.filter(fav => fav.id !== messageId);
+    this.setData({
+      favoriteMessages: favorites
+    });
+    wx.setStorageSync('chatFavorites', favorites);
+    wx.showToast({
+      title: '取消收藏',
+      icon: 'success'
     });
   },
 

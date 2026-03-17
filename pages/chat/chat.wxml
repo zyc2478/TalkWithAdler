@@ -1,4 +1,64 @@
 <view class="container">
+  <!-- 顶部操作栏 -->
+  <view class="top-bar">
+    <view class="top-bar-left">
+      <text class="title">与阿德勒对话</text>
+    </view>
+    <view class="top-bar-right">
+      <button class="icon-btn" bindtap="toggleHistory">
+        <text class="icon">📖</text>
+        <text class="btn-text">历史</text>
+      </button>
+      <button class="icon-btn" bindtap="toggleFavorites">
+        <text class="icon">⭐</text>
+        <text class="btn-text">收藏</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 历史对话面板 -->
+  <view wx:if="{{showHistory}}" class="history-panel">
+    <view class="panel-header">
+      <text class="panel-title">历史对话</text>
+      <button class="close-btn" bindtap="toggleHistory">×</button>
+    </view>
+    <view class="history-list">
+      <view wx:for="{{historyMessages}}" wx:key="id" class="history-item">
+        <view class="history-item-header">
+          <text class="history-role">{{item.role === 'user' ? '我' : '阿德勒'}}</text>
+          <text class="history-time">{{item.time}}</text>
+        </view>
+        <text class="history-content">{{item.content}}</text>
+      </view>
+      <view wx:if="{{historyMessages.length === 0}}" class="empty-hint">
+        <text>暂无历史对话</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 收藏对话面板 -->
+  <view wx:if="{{showFavorites}}" class="favorites-panel">
+    <view class="panel-header">
+      <text class="panel-title">收藏对话</text>
+      <button class="close-btn" bindtap="toggleFavorites">×</button>
+    </view>
+    <view class="favorites-list">
+      <view wx:for="{{favoriteMessages}}" wx:key="id" class="favorite-item">
+        <view class="favorite-item-header">
+          <text class="favorite-role">{{item.role === 'user' ? '我' : '阿德勒'}}</text>
+          <text class="favorite-time">{{item.time}}</text>
+          <button class="unfavorite-btn" bindtap="removeFromFavorites" data-id="{{item.id}}">
+            <text class="unfavorite-icon">☆</text>
+          </button>
+        </view>
+        <text class="favorite-content">{{item.content}}</text>
+      </view>
+      <view wx:if="{{favoriteMessages.length === 0}}" class="empty-hint">
+        <text>暂无收藏对话</text>
+      </view>
+    </view>
+  </view>
+
   <view class="chat-container" scroll-y="true" scroll-into-view="{{scrollToView}}">
     <view class="message-wrapper" wx:for="{{messages}}" wx:key="id" id="msg-{{item.id}}">
       <view class="message {{item.role === 'user' ? 'message-user' : 'message-adler'}}">
@@ -8,7 +68,12 @@
         </view>
         <view class="message-content">
           <text class="message-text">{{item.content}}</text>
-          <text class="message-time">{{item.time}}</text>
+          <view class="message-footer">
+            <text class="message-time">{{item.time}}</text>
+            <button wx:if="{{item.role === 'adler'}}" class="favorite-btn" bindtap="addToFavorites" data-id="{{item.id}}">
+              <text class="favorite-icon">⭐</text>
+            </button>
+          </view>
         </view>
       </view>
     </view>
