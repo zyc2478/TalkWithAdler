@@ -1,7 +1,7 @@
 /* 顶部操作栏 */
 .top-bar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 20rpx 30rpx;
   background-color: #1a1a2e;
@@ -9,24 +9,14 @@
   border-bottom: 1rpx solid #333;
   width: 100%;
   box-sizing: border-box;
-  position: relative;
 }
 
 .title {
   font-size: 36rpx;
   font-weight: bold;
   color: white;
+  flex: 1;
   text-align: center;
-}
-
-.top-bar-right {
-  position: absolute;
-  right: 30rpx;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  gap: 20rpx;
-  align-items: center;
 }
 
 .icon-btn {
@@ -38,11 +28,20 @@
   color: white;
   padding: 10rpx;
   font-size: 24rpx;
+  min-width: 100rpx;
 }
 
 .icon-btn .icon {
   font-size: 36rpx;
   margin-bottom: 4rpx;
+}
+
+.left-btn {
+  align-items: flex-start;
+}
+
+.right-btn {
+  align-items: flex-end;
 }
 
 /* 历史对话面板 */
@@ -187,9 +186,10 @@
 /* 消息收藏按钮 */
 .message-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-top: 10rpx;
+  gap: 10rpx;
 }
 
 .favorite-btn {
@@ -198,6 +198,8 @@
   color: #ff9800;
   font-size: 32rpx;
   padding: 0;
+  margin: 0;
+  line-height: 1;
 }
 
 /* 原有样式 */
