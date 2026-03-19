@@ -2,6 +2,10 @@
   <!-- 顶部操作栏 -->
   <view class="top-bar">
     <view class="top-bar-right">
+      <button class="icon-btn" bindtap="newChat">
+        <text class="icon">+</text>
+        <text class="btn-text">新建</text>
+      </button>
       <button class="icon-btn" bindtap="toggleHistory">
         <text class="icon">📖</text>
         <text class="btn-text">历史</text>
@@ -65,7 +69,7 @@
     <view class="message-wrapper" wx:for="{{messages}}" wx:key="id" id="msg-{{item.id}}">
       <view class="message {{item.role === 'user' ? 'message-user' : 'message-adler'}}">
         <view class="avatar">
-          <image wx:if="{{item.role === 'adler'}}" class="avatar-image" src="/images/icon.png"></image>
+          <image wx:if="{{item.role === 'adler'}}" class="avatar-image" src="/images/adler_avatar.png"></image>
           <view wx:else class="avatar-user">我</view>
         </view>
         <view class="message-content">
