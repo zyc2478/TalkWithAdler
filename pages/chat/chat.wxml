@@ -1,16 +1,12 @@
 <view class="container">
-  <!-- 顶部操作栏 -->
-  <view class="top-bar">
-    <view class="top-bar-right">
-      <button class="icon-btn" bindtap="toggleHistory">
-        <text class="icon">📖</text>
-        <text class="btn-text">历史</text>
-      </button>
-      <button class="icon-btn" bindtap="toggleFavorites">
-        <text class="icon">⭐</text>
-        <text class="btn-text">收藏</text>
-      </button>
-    </view>
+  <!-- 浮动工具栏 -->
+  <view class="floating-toolbar">
+    <button class="floating-btn" bindtap="toggleHistory">
+      <text class="floating-icon">📖</text>
+    </button>
+    <button class="floating-btn" bindtap="toggleFavorites">
+      <text class="floating-icon">⭐</text>
+    </button>
   </view>
 
   <!-- 历史对话面板 -->
