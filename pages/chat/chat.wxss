@@ -3,18 +3,22 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 20rpx 30rpx;
+  padding: 10rpx 20rpx;
   background-color: #1a1a2e;
   color: white;
   border-bottom: 1rpx solid #333;
   width: 100%;
   box-sizing: border-box;
+  height: 100rpx;
+  overflow: visible;
+  position: relative;
 }
 
 .top-bar-right {
   display: flex;
-  gap: 20rpx;
+  gap: 10rpx;
   align-items: center;
+  flex-wrap: nowrap;
 }
 
 .icon-btn {
@@ -25,13 +29,14 @@
   border: none;
   color: white;
   padding: 10rpx;
-  font-size: 24rpx;
-  min-width: 80rpx;
+  font-size: 20rpx;
+  min-width: 70rpx;
+  max-width: 100rpx;
 }
 
 .icon-btn .icon {
-  font-size: 36rpx;
-  margin-bottom: 4rpx;
+  font-size: 28rpx;
+  margin-bottom: 2rpx;
 }
 
 /* 历史对话面板 */
@@ -76,8 +81,8 @@
   line-height: 1;
   z-index: 1001;
   cursor: pointer;
-  position: absolute;
-  top: -20rpx;
+  position: absolute; top: -20rpx
+ ;
   right: -20rpx;
 }
 
@@ -252,6 +257,8 @@
   flex-direction: column;
   height: 100vh;
   background-color: #16213e;
+  width: 100%;
+  overflow: hidden;
 }
 
 .chat-container {
@@ -293,21 +300,9 @@
   width: 80rpx;
   height: 80rpx;
   border-radius: 50%;
-  background-color: #e94560;
-}
-
-.avatar-adler {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #e94560 0%, #c53030 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 32rpx;
-  font-weight: bold;
-  border: 2rpx solid #fff;
+  display: block;
+  object-fit: cover;
+  background-color: transparent;
 }
 
 .avatar-user {
@@ -392,6 +387,7 @@
   }
 }
 
+/* 输入框区域样式 */
 .input-container {
   background-color: #1a1a2e;
   padding: 20rpx;
@@ -403,7 +399,30 @@
   align-items: center;
   background-color: #0f3460;
   border-radius: 40rpx;
-  padding: 10rpx 20rpx;
+  padding: 10rpx 20rpx 10rpx 10rpx;
+}
+
+.new-chat-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 0;
+  margin-right: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background-color: #e94560;
+  margin-left: 0;
+}
+
+.new-chat-icon {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
 }
 
 .chat-input {
@@ -419,18 +438,19 @@
 }
 
 .send-btn {
-  width: 120rpx;
+  width: 80rpx;
   height: 64rpx;
   line-height: 64rpx;
-  font-size: 26rpx;
+  font-size: 24rpx;
   background: linear-gradient(135deg, #e94560 0%, #c53030 100%);
   color: #fff;
   border-radius: 32rpx;
   padding: 0;
   margin: 0;
+  border: none;
 }
 
-.send-btn[disabled] {
+.send-btn-disabled {
   background: #444;
   color: #888;
 }

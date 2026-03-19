@@ -2,10 +2,6 @@
   <!-- 顶部操作栏 -->
   <view class="top-bar">
     <view class="top-bar-right">
-      <button class="icon-btn" bindtap="newChat">
-        <text class="icon">+</text>
-        <text class="btn-text">新建</text>
-      </button>
       <button class="icon-btn" bindtap="toggleHistory">
         <text class="icon">📖</text>
         <text class="btn-text">历史</text>
@@ -91,6 +87,9 @@
 
   <view class="input-container">
     <view class="input-wrapper">
+      <button class="new-chat-btn" bindtap="newChat">
+        <text class="new-chat-icon">+</text>
+      </button>
       <input 
         class="chat-input" 
         value="{{inputValue}}" 
