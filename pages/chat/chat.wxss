@@ -1,6 +1,7 @@
 /* 顶部操作栏 */
 .top-bar {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 20rpx 30rpx;
   background-color: #1a1a2e;
@@ -16,6 +17,7 @@
   color: white;
   flex: 1;
   text-align: center;
+  margin: 0 20rpx;
 }
 
 .top-bar-right {
@@ -33,7 +35,7 @@
   color: white;
   padding: 10rpx;
   font-size: 24rpx;
-  min-width: 100rpx;
+  min-width: 80rpx;
 }
 
 .icon-btn .icon {
