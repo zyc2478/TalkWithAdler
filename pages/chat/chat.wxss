@@ -9,6 +9,7 @@
   border-bottom: 1rpx solid #333;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
 .title {
@@ -19,6 +20,13 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.top-bar-right {
+  display: flex;
+  gap: 20rpx;
+  align-items: center;
+  margin-left: auto;
 }
 
 .icon-btn {
@@ -36,14 +44,6 @@
 .icon-btn .icon {
   font-size: 36rpx;
   margin-bottom: 4rpx;
-}
-
-.left-btn {
-  margin-right: auto;
-}
-
-.right-btn {
-  margin-left: auto;
 }
 
 /* 历史对话面板 */

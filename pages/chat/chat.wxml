@@ -1,15 +1,17 @@
 <view class="container">
   <!-- 顶部操作栏 -->
   <view class="top-bar">
-    <button class="icon-btn left-btn" bindtap="toggleHistory">
-      <text class="icon">📖</text>
-      <text class="btn-text">历史</text>
-    </button>
     <text class="title">与阿德勒对话</text>
-    <button class="icon-btn right-btn" bindtap="toggleFavorites">
-      <text class="icon">⭐</text>
-      <text class="btn-text">收藏</text>
-    </button>
+    <view class="top-bar-right">
+      <button class="icon-btn" bindtap="toggleHistory">
+        <text class="icon">📖</text>
+        <text class="btn-text">历史</text>
+      </button>
+      <button class="icon-btn" bindtap="toggleFavorites">
+        <text class="icon">⭐</text>
+        <text class="btn-text">收藏</text>
+      </button>
+    </view>
   </view>
 
   <!-- 历史对话面板 -->
