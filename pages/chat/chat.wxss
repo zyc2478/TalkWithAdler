@@ -1,7 +1,7 @@
 /* 顶部操作栏 */
 .top-bar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 20rpx 30rpx;
   background-color: #1a1a2e;
@@ -9,15 +9,6 @@
   border-bottom: 1rpx solid #333;
   width: 100%;
   box-sizing: border-box;
-}
-
-.title {
-  font-size: 36rpx;
-  font-weight: bold;
-  color: white;
-  flex: 1;
-  text-align: center;
-  margin: 0 20rpx;
 }
 
 .top-bar-right {

@@ -1,7 +1,6 @@
 <view class="container">
   <!-- 顶部操作栏 -->
   <view class="top-bar">
-    <text class="title">与阿德勒对话</text>
     <view class="top-bar-right">
       <button class="icon-btn" bindtap="toggleHistory">
         <text class="icon">📖</text>
