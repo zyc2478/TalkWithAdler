@@ -69,7 +69,7 @@
           <text class="message-time">{{item.time}}</text>
         </view>
         <button wx:if="{{item.role === 'adler'}}" class="favorite-btn" bindtap="toggleFavorite" data-id="{{item.id}}">
-          <text class="favorite-icon">{{item.isFavorite ? '⭐' : '☆'}}</text>
+          <text class="favorite-icon" style="color: {{item.isFavorite ? '#ff9800' : '#888'}}">{{item.isFavorite ? '★' : '☆'}}</text>
         </button>
       </view>
     </view>
