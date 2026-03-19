@@ -20,6 +20,11 @@
       <button class="close-btn" bindtap="toggleHistory">×</button>
     </view>
     <view class="history-list">
+      <!-- 新建对话按钮 -->
+      <view class="history-item new-chat-item" bindtap="newChat">
+        <view class="new-chat-icon">+</view>
+        <view class="new-chat-text">新建对话</view>
+      </view>
       <view wx:for="{{historyMessages}}" wx:key="id" class="history-item">
         <view class="history-item-header">
           <text class="history-role">{{item.role === 'user' ? '我' : '阿德勒'}}</text>
@@ -60,7 +65,7 @@
     <view class="message-wrapper" wx:for="{{messages}}" wx:key="id" id="msg-{{item.id}}">
       <view class="message {{item.role === 'user' ? 'message-user' : 'message-adler'}}">
         <view class="avatar">
-          <view wx:if="{{item.role === 'adler'}}" class="avatar-adler">阿</view>
+          <image wx:if="{{item.role === 'adler'}}" class="avatar-image" src="/images/icon.png"></image>
           <view wx:else class="avatar-user">我</view>
         </view>
         <view class="message-content">

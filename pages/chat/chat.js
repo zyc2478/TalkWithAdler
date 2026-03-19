@@ -14,11 +14,7 @@ Page({
   },
 
   onLoad() {
-    // 清空所有旧数据，避免显示错误数据
-    wx.setStorageSync('chatHistory', []);
-    wx.setStorageSync('chatFavorites', []);
-    // 清空当前消息数组
-    this.setData({ messages: [] });
+    // 初始化对话
     this.initConversation();
     this.loadHistory();
     this.loadFavorites();
@@ -238,6 +234,21 @@ Page({
   toggleFavorites() {
     this.setData({
       showFavorites: !this.data.showFavorites,
+      showHistory: false
+    });
+  },
+
+  newChat() {
+    // 清空当前的消息列表
+    this.setData({
+      messages: []
+    });
+    // 保存历史记录
+    this.saveHistory();
+    // 初始化新的对话
+    this.initConversation();
+    // 关闭历史对话面板
+    this.setData({
       showHistory: false
     });
   },
