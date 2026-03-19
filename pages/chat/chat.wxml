@@ -66,13 +66,11 @@
         </view>
         <view class="message-content">
           <text class="message-text">{{item.content}}</text>
-          <view class="message-footer">
-            <text class="message-time">{{item.time}}</text>
-            <button wx:if="{{item.role === 'adler'}}" class="favorite-btn" bindtap="addToFavorites" data-id="{{item.id}}">
-              <text class="favorite-icon">⭐</text>
-            </button>
-          </view>
+          <text class="message-time">{{item.time}}</text>
         </view>
+        <button wx:if="{{item.role === 'adler'}}" class="favorite-btn" bindtap="toggleFavorite" data-id="{{item.id}}">
+          <text class="favorite-icon">{{item.isFavorite ? '⭐' : '☆'}}</text>
+        </button>
       </view>
     </view>
     

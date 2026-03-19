@@ -202,6 +202,11 @@
   padding: 0;
   margin: 0;
   line-height: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(0, 50%);
+  z-index: 10;
 }
 
 /* 原有样式 */
@@ -227,6 +232,7 @@
   display: flex;
   align-items: flex-start;
   max-width: 85%;
+  position: relative;
 }
 
 .message-user {
@@ -236,6 +242,7 @@
 
 .message-adler {
   margin-right: auto;
+  padding-right: 60rpx;
 }
 
 .avatar {

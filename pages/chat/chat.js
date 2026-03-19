@@ -52,7 +52,8 @@ Page({
       id: Date.now(),
       role: role,
       content: content,
-      time: this.formatTime(new Date())
+      time: this.formatTime(new Date()),
+      isFavorite: false
     };
     
     this.setData({
@@ -269,6 +270,57 @@ Page({
       title: '取消收藏',
       icon: 'success'
     });
+  },
+
+  toggleFavorite(messageId) {
+    const messages = this.data.messages;
+    const messageIndex = messages.findIndex(msg => msg.id === messageId);
+    
+    if (messageIndex !== -1) {
+      const message = messages[messageIndex];
+      const isFavorite = !message.isFavorite;
+      
+      // 更新消息的收藏状态
+      messages[messageIndex] = {
+        ...message,
+        isFavorite: isFavorite
+      };
+      
+      this.setData({
+        messages: messages
+      });
+      
+      // 保存历史记录
+      this.saveHistory();
+      
+      // 更新收藏列表
+      if (isFavorite) {
+        // 添加到收藏
+        const favorites = this.data.favoriteMessages;
+        if (!favorites.some(fav => fav.id === messageId)) {
+          favorites.push(messages[messageIndex]);
+          this.setData({
+            favoriteMessages: favorites
+          });
+          wx.setStorageSync('chatFavorites', favorites);
+          wx.showToast({
+            title: '收藏成功',
+            icon: 'success'
+          });
+        }
+      } else {
+        // 从收藏中移除
+        const favorites = this.data.favoriteMessages.filter(fav => fav.id !== messageId);
+        this.setData({
+          favoriteMessages: favorites
+        });
+        wx.setStorageSync('chatFavorites', favorites);
+        wx.showToast({
+          title: '取消收藏',
+          icon: 'success'
+        });
+      }
+    }
   },
 
   onShareAppMessage() {
