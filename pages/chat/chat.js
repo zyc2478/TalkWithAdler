@@ -272,13 +272,18 @@ Page({
     });
   },
 
-  toggleFavorite(messageId) {
+  toggleFavorite(e) {
+    const messageId = e.currentTarget.dataset.id;
+    console.log('点击了收藏按钮，消息ID:', messageId);
+    
     const messages = this.data.messages;
     const messageIndex = messages.findIndex(msg => msg.id === messageId);
+    console.log('消息索引:', messageIndex);
     
     if (messageIndex !== -1) {
       const message = messages[messageIndex];
       const isFavorite = !message.isFavorite;
+      console.log('当前收藏状态:', message.isFavorite, '新状态:', isFavorite);
       
       // 更新消息的收藏状态
       messages[messageIndex] = {
@@ -289,6 +294,7 @@ Page({
       this.setData({
         messages: messages
       });
+      console.log('更新后的消息:', messages[messageIndex]);
       
       // 保存历史记录
       this.saveHistory();
@@ -307,6 +313,7 @@ Page({
             title: '收藏成功',
             icon: 'success'
           });
+          console.log('添加到收藏列表');
         }
       } else {
         // 从收藏中移除
@@ -319,7 +326,10 @@ Page({
           title: '取消收藏',
           icon: 'success'
         });
+        console.log('从收藏列表移除');
       }
+    } else {
+      console.log('未找到消息:', messageId);
     }
   },
 
